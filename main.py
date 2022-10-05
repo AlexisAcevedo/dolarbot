@@ -12,7 +12,14 @@ def dolarBlue(update, context):
     response = requests.get('https://api-dolar-argentina.herokuapp.com/api/dolarblue')
     if (response.status_code==200):
         data = response.json()
-        context.bot.send_message(chat_id=update.effective_chat.id, text=data)
+        fecha = data['fecha']
+        precio_compra = data['compra']
+        precio_venta = data['venta']
+
+        message = f"""Para la fecha {fecha}
+        el precio de la compra es {precio_compra}
+        el precio de la venta es {precio_venta}"""
+        context.bot.send_message(chat_id=update.effective_chat.id, text=message)
     else: 
         context.bot.send_message(chat_id=update.effective_chat.id, text="Error, algo salio mal")
 
